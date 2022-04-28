@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Subtotal from "./Subtotal";
 
 function Cart() {
   return (
@@ -8,6 +9,7 @@ function Cart() {
         <h1>Shopping Cart</h1>
         <hr />
       </ShoppingCart>
+      <Subtotal />
     </Container>
   );
 }
@@ -16,7 +18,7 @@ export default Cart;
 
 const Container = styled.div`
     display: flex;
-    height: 100vh;
+    height: 90vh;
     background-color: #eaeded;
     padding: 14px 18px;
 `;
