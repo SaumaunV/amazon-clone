@@ -72,7 +72,7 @@ const ProductRating = styled.div`
   }
 `
 
-const Button = styled.div`
+export const Button = styled.div`
   margin-top: 30px;
   text-align: center;
 

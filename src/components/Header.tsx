@@ -2,14 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
     <Container>
-      <img
-        src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
-        alt="Amazon Logo"
-      />
+      <Link to="/">
+        <img
+          src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
+          alt="Amazon Logo"
+        />
+      </Link>
 
       <Input>
         <form>
@@ -21,21 +24,25 @@ function Header() {
       </Input>
 
       <RightMenu>
-        <div className="main">
-          <span className="first">Hello, Sign in</span>
-          <span className="second">Account & Lists</span>
-        </div>
+        <Link to="../login" style={{ textDecoration: "none" }}>
+          <div className="main">
+            <span className="first">Hello, Sign in</span>
+            <span className="second">Account & Lists</span>
+          </div>
+        </Link>
         <div className="main">
           <span className="first">Returns</span>
           <span className="second">& Orders</span>
         </div>
-        <div className="main cart">
-          <ShoppingCartIcon className="cart-icon"/>
-          <div className="cart-text">
-            <span className="cart-number">0</span>
-            <span className="second">Cart</span>
+        <Link to="../cart" style={{ textDecoration: "none" }}>
+          <div className="main cart">
+            <ShoppingCartIcon className="cart-icon" />
+            <div className="cart-text">
+              <span className="cart-number">0</span>
+              <span className="second">Cart</span>
+            </div>
           </div>
-        </div>
+        </Link>
       </RightMenu>
     </Container>
   );
@@ -109,6 +116,7 @@ const RightMenu = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    color: white;
 
     padding: 0 13px;
     margin: 0 2px;
