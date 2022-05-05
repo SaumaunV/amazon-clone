@@ -1,7 +1,40 @@
-import React from "react";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { auth } from "../firebase";
 
 function Login() {
+  const [{ email, password }, setAccount] = useState({
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate()
+
+  function handleSignin(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        navigate("/");
+      })
+      .catch((error) => alert(error.message));
+  }
+
+  function createAccount(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        if (userCredential) {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  }
+
   return (
     <Container>
       <img
@@ -10,20 +43,25 @@ function Login() {
       />
       <FormWrapper>
         <h1>Create account</h1>
-        <form action="">
+        <form>
           <div>
-            <label>Your name</label>
-            <input type="text" />
-          </div>
-          <div>
-            <label>Mobile number or email</label>
-            <input type="text" />
+            <label>Email</label>
+            <input
+              type="text"
+              onChange={(e) =>
+                setAccount({ email: e.target.value, password })
+              }
+            />
           </div>
           <div>
             <label>Password</label>
-            <input type="text" />
+            <input
+              type="password"
+              onChange={(e) => setAccount({ email, password: e.target.value })}
+            />
           </div>
-          <button>Sign Up</button>
+          <button onClick={handleSignin}>Sign In</button>
+          <button onClick={createAccount}>Create Your Amazon Account</button>
         </form>
       </FormWrapper>
     </Container>
