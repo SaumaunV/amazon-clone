@@ -1,7 +1,9 @@
+import { User } from "firebase/auth";
 import React, { createContext, useContext, useReducer } from "react";
 import { Action, CartItem, StateType } from "./reducer";
 
-export const StateContext = createContext({});
+
+export const StateContext = createContext<any>(null);
 
 interface Props {
   reducer: (
@@ -9,7 +11,7 @@ interface Props {
     b: Action
   ) => {
     cart: CartItem[];
-    user: null;
+    user: User | null;
   };
   initialState: StateType;
   children: React.ReactNode;

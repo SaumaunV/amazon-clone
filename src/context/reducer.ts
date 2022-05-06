@@ -1,3 +1,5 @@
+import { User } from "firebase/auth";
+
 export type CartItem = {
   title: string;
   price: number;
@@ -7,12 +9,13 @@ export type CartItem = {
 
 export type StateType = {
   cart: CartItem[];
-  user: null;
+  user: User | null;
 };
 
 export type Action =
   | { type: "ADD_TO_CART"; item: CartItem }
-  | { type: "REMOVE_FROM_CART"; title: string };
+  | { type: "REMOVE_FROM_CART"; title: string }
+  | { type: "SET_USER"; user: User | null};
 
 export const initialState: StateType = {
   cart: [],
@@ -42,6 +45,11 @@ const reducer = (state: StateType, action: Action) => {
       return {
           ...state,
           cart: newCart
+      }
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.user
       }
     default:
         return state;
