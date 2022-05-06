@@ -3,8 +3,19 @@ import styled from "styled-components";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link } from "react-router-dom";
+import { useStateValue } from "../context/StateProvider";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
 
 function Header() {
+  const [{cart, user}, dispatch] = useStateValue();
+
+  function handleAuthentication() {
+    if(user){
+      signOut(auth);
+    }
+  }
+
   return (
     <Container>
       <Link to="/">
@@ -24,9 +35,11 @@ function Header() {
       </Input>
 
       <RightMenu>
-        <Link to="../login" style={{ textDecoration: "none" }}>
-          <div className="main">
-            <span className="first">Hello, Sign in</span>
+        <Link to={user ? "/" : "../login"} style={{ textDecoration: "none" }}>
+          <div className="main" onClick={handleAuthentication}>
+            <span className="first">
+              Hello, {user ? user.email.split("@")[0] : "Sign in"}{" "}
+            </span>
             <span className="second">Account & Lists</span>
           </div>
         </Link>
@@ -38,7 +51,7 @@ function Header() {
           <div className="main cart">
             <ShoppingCartIcon className="cart-icon" />
             <div className="cart-text">
-              <span className="cart-number">0</span>
+              <span className="cart-number">{cart.length}</span>
               <span className="second">Cart</span>
             </div>
           </div>

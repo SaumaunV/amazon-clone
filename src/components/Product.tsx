@@ -1,14 +1,29 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
+import { useStateValue } from "../context/StateProvider";
 
 interface Props {
-    title: string,
-    price: number,
-    image: string,
-    rating: number  
+  title: string;
+  price: number;
+  image: string;
+  rating: number;
 }
 
 function Product(props: Props) {
+  const [ _ , dispatch] = useStateValue();
+
+  const addToCart = () => {
+    dispatch({
+      type: "ADD_TO_CART",
+      item: {
+        title: props.title,
+        price: props.price,
+        image: props.image,
+        rating: props.rating,
+      },
+    });
+  };
+
   return (
     <Container>
       <h3>{props.title}</h3>
@@ -31,13 +46,13 @@ function Product(props: Props) {
       </div>
 
       <Button>
-        <button>Add to Cart</button>
+        <button onClick={addToCart}>Add to Cart</button>
       </Button>
     </Container>
   );
 }
 
-export default Product
+export default Product;
 
 const Container = styled.div`
   height: 450px;
@@ -70,7 +85,7 @@ const ProductRating = styled.div`
   p {
     color: gold;
   }
-`
+`;
 
 export const Button = styled.div`
   margin-top: 30px;
@@ -90,4 +105,4 @@ export const Button = styled.div`
       border-color: #f2c200;
     }
   }
-`
+`;
