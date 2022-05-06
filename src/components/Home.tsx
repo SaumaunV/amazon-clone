@@ -39,7 +39,7 @@ function Home() {
         <Product
           title="eufy by Anker, BoostIQ RoboVac 11S (Slim), Robot Vacuum Cleaner, Super-Thin, 1300Pa Strong Suction, Quiet, Self-Charging Robotic Vacuum Cleaner, Cleans Hard Floors to Medium-Pile Carpets"
           price={149.99}
-          image="https://images-na.ssl-images-amazon.com/images/I/71TmTj7HjNL._AC_SL1500_.jpg"
+          image="https://m.media-amazon.com/images/I/71TmTj7HjNL._AC_SY450_.jpg"
           rating={5}
         />
         <Product
