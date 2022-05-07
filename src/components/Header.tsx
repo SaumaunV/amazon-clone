@@ -38,7 +38,7 @@ function Header() {
         <Link to={user ? "/" : "../login"} style={{ textDecoration: "none" }}>
           <div className="main" onClick={handleAuthentication}>
             <span className="first">
-              Hello, {user ? user.email.split("@")[0] : "Sign in"}{" "}
+              Hello, {user ? user.email!.split("@")[0]! : "Sign in"}{" "}
             </span>
             <span className="second">Account & Lists</span>
           </div>

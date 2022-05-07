@@ -15,7 +15,8 @@ export type StateType = {
 export type Action =
   | { type: "ADD_TO_CART"; item: CartItem }
   | { type: "REMOVE_FROM_CART"; title: string }
-  | { type: "SET_USER"; user: User | null};
+  | { type: "SET_USER"; user: User | null}
+  | { type: "EMPTY_CART"};
 
 export const initialState: StateType = {
   cart: [],
@@ -45,6 +46,11 @@ const reducer = (state: StateType, action: Action) => {
       return {
           ...state,
           cart: newCart
+      }
+    case "EMPTY_CART":
+      return {
+        ...state,
+        cart: []
       }
     case "SET_USER":
       return {
