@@ -1,14 +1,18 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { StripeCardElementChangeEvent } from "@stripe/stripe-js";
+import { collection, doc, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { CartItem, getCartTotal } from "../context/reducer";
 import { useStateValue } from "../context/StateProvider";
+import { db } from "../firebase";
 import CartProduct from "./CartProduct";
 
+const baseURL = "http://localhost:5001/clone-e06ca/us-central1/api";
+
 function Payment() {
-  const [{ cart, user }, _] = useStateValue();
+  const [{ cart, user }, dispatch] = useStateValue();
   const [error, setError] = useState<string | null>(null);
   const [disabled, setDisabled] = useState(true);
   const [succeeded, setSucceeded] = useState(false);
@@ -23,17 +27,19 @@ function Payment() {
   useEffect(() => {
     async function getClientSecret() {
       const response = await fetch(
-        `/payments/create?total=${getCartTotal(cart) * 100}`,
+        `${baseURL}/payments/create?total=${Math.round(getCartTotal(cart) * 100)}`,
         {
+          mode: "cors",
           method: "POST",
         }
       );
       const respData = await response.json();
       setClientSecret(respData.clientSecret)
     }
-
     getClientSecret();
   }, [cart]);
+
+  //console.log('The secret is >>>>', clientSecret)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -44,9 +50,18 @@ function Payment() {
         card: elements!.getElement(CardElement)!,
       },
     }).then(({paymentIntent}) => {
+
+        setDoc(doc(db, "users", `${user?.uid}`, 'orders', `${paymentIntent!.id}`), {
+          cart: cart,
+          amount: paymentIntent!.amount,
+          created: paymentIntent!.created
+        })
+
         setSucceeded(true);
         setError(null);
         setProcessing(false);
+
+        dispatch({type: "EMPTY_CART"})
 
         navigate("/orders", {replace: true});
     })
@@ -86,6 +101,7 @@ function Payment() {
                 title={item.title}
                 image={item.image}
                 price={item.price}
+                hideBorder
               />
             ))}
           </div>
@@ -98,8 +114,9 @@ function Payment() {
               <div>
                 <span>Order total: ${getCartTotal(cart)}</span>
               </div>
-              <button disabled={disabled || succeeded || processing}>
-                {processing ? "Processing" : "Buy Now"}
+              
+              <button className="pay-button" disabled={disabled || succeeded || processing}>
+                {processing ? "Processing..." : "Buy Now"}
               </button>
               {error && <div>{error}</div>}
             </form>
@@ -149,5 +166,23 @@ const PaymentSection = styled.div`
   span {
     font-size: 20px;
     font-weight: 500;
+  }
+
+  .pay-button {
+    width: 300px;
+    margin: 10px 0;
+    height: 30px;
+    background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+    border-width: 1px;
+    border-radius: 3px;
+    border-color: #a88734 #9c7e31 #846a29;
+    color: #111;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      background: linear-gradient(to bottom, #f3d796, #f0bf43);
+      border-color: #a88734 #9c7e31 #846a29;
+    }
   }
 `;

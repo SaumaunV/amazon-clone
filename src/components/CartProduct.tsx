@@ -7,9 +7,15 @@ interface Props {
   title: string,
   price: number,
   image: string,
+  hideButton?: boolean
+  hideBorder?: boolean
 }
 
-function CartProduct({title, price, image}: Props) {
+interface ContainerProps {
+  hideBorder?: boolean
+}
+
+function CartProduct({title, price, image, hideButton, hideBorder}: Props) {
   const [_, dispatch] = useStateValue();
 
   function removeItem() {
@@ -17,20 +23,22 @@ function CartProduct({title, price, image}: Props) {
   }
 
   return (
-    <Container>
+    <Container hideBorder={hideBorder}>
       <img src={image} alt={title} />
       <Info>
         <InfoText>
-          <span className='title'>{title}</span>
+          <span className="title">{title}</span>
           <p>
-            <span className='dollar-sign'>$</span>
-            <span className='price'>{price}</span>
+            <span className="dollar-sign">$</span>
+            <span className="price">{price}</span>
           </p>
-          <span className='stock'>In Stock</span>
+          <span className="stock">In Stock</span>
         </InfoText>
-        <RemoveButton>
-          <button onClick={removeItem}>Remove from Cart</button>
-        </RemoveButton>
+        {!hideButton && (
+          <RemoveButton>
+            <button onClick={removeItem}>Remove from Cart</button>
+          </RemoveButton>
+        )}
       </Info>
     </Container>
   );
@@ -38,13 +46,13 @@ function CartProduct({title, price, image}: Props) {
 
 export default CartProduct
 
-const Container = styled.div`
+const Container = styled.div<ContainerProps>`
   display: flex;
   width: 1460px;
   height: 240px;
   padding: 12px;
   margin: 20px;
-  border: 1px solid rgb(231, 231, 231);
+  border: ${(props) => props.hideBorder ? "none" : "1px solid rgb(231, 231, 231)"} ;
 
   img {
     min-width: 250px;

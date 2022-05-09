@@ -43,10 +43,13 @@ function Header() {
             <span className="second">Account & Lists</span>
           </div>
         </Link>
-        <div className="main">
-          <span className="first">Returns</span>
-          <span className="second">& Orders</span>
-        </div>
+        <Link to="../orders" style={{ textDecoration: "none" }}>
+          <div className="main">
+            <span className="first">Returns</span>
+            <span className="second">& Orders</span>
+          </div>
+        </Link>
+
         <Link to="../cart" style={{ textDecoration: "none" }}>
           <div className="main cart">
             <ShoppingCartIcon className="cart-icon" />
