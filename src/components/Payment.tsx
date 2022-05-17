@@ -9,7 +9,7 @@ import { useStateValue } from "../context/StateProvider";
 import { db } from "../firebase";
 import CartProduct from "./CartProduct";
 
-const baseURL = "http://localhost:5001/clone-e06ca/us-central1/api";
+const baseURL = "https://us-central1-clone-e06ca.cloudfunctions.net/api";
 
 function Payment() {
   const [{ cart, user }, dispatch] = useStateValue();
@@ -35,6 +35,7 @@ function Payment() {
       );
       const respData = await response.json();
       setClientSecret(respData.clientSecret)
+      console.log(`create?total=${Math.round(getCartTotal(cart) * 100)}`);
     }
     getClientSecret();
   }, [cart]);

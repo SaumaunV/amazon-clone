@@ -3,7 +3,7 @@ import express = require("express");
 import cors = require("cors");
 require("dotenv").config();
 const stripe = require("stripe")(
-  process.env.API_KEY
+  functions.config().stripe.api_key
 );
 
 const app = express();
