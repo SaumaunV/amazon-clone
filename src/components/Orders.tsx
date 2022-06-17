@@ -4,6 +4,7 @@ import {
   onSnapshot,
   orderBy,
   query,
+  Unsubscribe,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useStateValue } from "../context/StateProvider";
@@ -24,8 +25,9 @@ function Orders() {
   const q = query(colRef, orderBy("created", "desc"));
 
   useEffect(() => {
+    let unsubscribe: Unsubscribe;
     if (user) {
-      onSnapshot(q, (snapshot) => {
+     unsubscribe = onSnapshot(q, (snapshot) => {
         setOrders(
           snapshot.docs.map((doc) => ({
             id: doc.id,
@@ -36,13 +38,18 @@ function Orders() {
     } else {
       setOrders([]);
     }
+    if(user) {
+      return () => unsubscribe();
+    }
+    
+    //return onsnapshot unsubscribe function
   }, []);
 
   return (
     <Container>
       <h1>Your Orders</h1>
       {orders.map((order) => (
-        <Order order={order} />
+        <Order key={order.id} order={order} />
       ))}
     </Container>
   );
