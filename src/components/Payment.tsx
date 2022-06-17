@@ -10,6 +10,7 @@ import { db } from "../firebase";
 import CartProduct from "./CartProduct";
 
 const baseURL = "https://us-central1-clone-e06ca.cloudfunctions.net/api";
+//const baseUrl = "http://localhost:5001/clone-e06ca/us-central1/api";
 
 function Payment() {
   const [{ cart, user }, dispatch] = useStateValue();
@@ -35,9 +36,10 @@ function Payment() {
       );
       const respData = await response.json();
       setClientSecret(respData.clientSecret)
-      console.log(`create?total=${Math.round(getCartTotal(cart) * 100)}`);
     }
-    getClientSecret();
+    if (cart.length > 0) {
+      getClientSecret();
+    }
   }, [cart]);
 
   //console.log('The secret is >>>>', clientSecret)
