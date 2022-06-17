@@ -26,20 +26,22 @@ function Product(props: Props) {
 
   return (
     <Container>
-      <h3>{props.title}</h3>
+      <ProductInfo>
+        <h3>{props.title}</h3>
 
-      <ProductRating>
-        {Array(props.rating)
-          .fill(null)
-          .map((_, index) => (
-            <p key={index}>★</p>
-          ))}
-      </ProductRating>
+        <ProductRating>
+          {Array(props.rating)
+            .fill(null)
+            .map((_, index) => (
+              <p key={index}>★</p>
+            ))}
+        </ProductRating>
 
-      <p>
-        <small>$</small>
-        <span>{props.price}</span>
-      </p>
+        <p>
+          <small>$</small>
+          <span>{props.price}</span>
+        </p>
+      </ProductInfo>
 
       <div className="productImage">
         <img src={props.image} alt={props.title} />
@@ -78,6 +80,10 @@ const Container = styled.div`
     vertical-align: text-top;
   }
 `;
+
+const ProductInfo = styled.div`
+  height: 125px;
+`
 
 const ProductRating = styled.div`
   display: flex;
