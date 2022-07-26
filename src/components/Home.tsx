@@ -60,9 +60,11 @@ const Container = styled.div`
   background-color: #eaeded;
 
   .homeImage {
-    height: 600px;
+    max-width: 1500px;
+    width: 100%;
     z-index: -1;
-    margin-bottom: -150px;
+    margin-bottom: -100px;
+    margin-bottom: clamp(-150px, -10vw, -50px);
     mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
   }
 `;
@@ -71,7 +73,7 @@ const ProductWrapper = styled.div`
   display: grid;
   grid-template-columns: auto auto;
   justify-content: center;
-  column-gap: 40px;
-  row-gap: 40px;
+  column-gap: 30px;
+  row-gap: 30px;
   padding-bottom: 40px;
 `
