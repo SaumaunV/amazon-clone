@@ -44,7 +44,7 @@ function Header() {
           </div>
         </Link>
         <Link to="../orders" style={{ textDecoration: "none" }}>
-          <div className="main">
+          <div className="main orders">
             <span className="first">Returns</span>
             <span className="second">& Orders</span>
           </div>
@@ -73,7 +73,7 @@ const Container = styled.div`
   height: 60px;
 
   img {
-    width: 100px;
+    width: clamp(60px, 10vw, 100px);
     height: 36px;
     object-fit: contain;
     margin: 0 20px;
@@ -100,6 +100,7 @@ const Input = styled.div`
   input,
   button {
     height: 40px;
+    height: clamp(30px, 5vw, 40px);
     border: none;
     vertical-align: bottom;
   }
@@ -110,15 +111,25 @@ const Input = styled.div`
     text-indent: 8px;
     font-size: 15px;
     padding-bottom: 3px;
+    @media (max-width: 500px) {
+      width: 20vw;
+    }
+    @media (max-width: 400px) {
+      width: 10vw;
+    }
   }
 
   button {
-    width: 45px;
+    flex: 1;
+    max-width: min(45px, 5vw);
     background-color: #febd69;
     cursor: pointer;
   }
 
   .searchIcon {
+    @media (max-width: 400px) {
+      width: 5vw;
+    }
   }
 `;
 
@@ -134,7 +145,7 @@ const RightMenu = styled.div`
     justify-content: center;
     color: white;
 
-    padding: 0 13px;
+    padding: 0 min(13px, 0.5vw);
     margin: 0 2px;
     height: 50px;
     margin-bottom: 3px;
@@ -151,12 +162,19 @@ const RightMenu = styled.div`
     font-size: 12px;
   }
 
+  /* .orders {
+    display: none;
+  } */
+
   .cart {
     flex-direction: row;
     text-align: center;
     display: flex;
     align-items: end;
     padding-left: 10px;
+    @media (max-width: 800px) {
+      align-items: center;
+    }
   }
 
   .cart > div {
@@ -165,18 +183,19 @@ const RightMenu = styled.div`
   }
 
   .first {
+    font-size: min(calc(0.3em + 1vw), 12px);
     line-height: 12px;
     padding-left: 1px;
   }
 
   .second {
     line-height: 15px;
-    font-size: 14px;
+    font-size: min(calc(0.3em + 1vw), 14px);
     font-weight: bold;
   }
 
   .cart-number {
-    font-size: 16px;
+    font-size: min(calc(0.5em + 1vw), 16px);
     font-weight: bold;
     color: #f08804;
   }
@@ -187,7 +206,7 @@ const RightMenu = styled.div`
 
   .cart-icon {
     padding-bottom: 7px;
-    height: 40px;
-    width: 40px;
+    height: clamp(30px, 5vw, 40px);
+    width: clamp(30px, 5vw, 40px);
   }
 `;
