@@ -1,5 +1,4 @@
 import React from "react";
-//import Moment from "react-moment";
 import moment from "moment";
 import { CartItem } from "../context/reducer";
 import CartProduct from "./CartProduct";
@@ -14,7 +13,6 @@ function Order({ order }: Props) {
   return (
     <Container>
       <h2>Order</h2>
-      {/* <Moment unix format="MMMM Do YYYY, h:mma"></Moment> */}
       <p>{moment.unix(order.data.created).format("MMMM Do YYYY, h:mma")}</p>
       <p className="id">
         <small>{order.id}</small>
@@ -22,7 +20,7 @@ function Order({ order }: Props) {
       {order.data.cart?.map((item: CartItem) => (
         <CartProduct title={item.title} image={item.image} price={item.price} hideButton hideBorder/>
       ))}
-      <span>Order Total: ${order.data.amount/100}</span>
+      <span className="order-total">Order Total: ${order.data.amount/100}</span>
     </Container>
   );
 }
@@ -30,7 +28,7 @@ function Order({ order }: Props) {
 export default Order;
 
 const Container = styled.div`
-  padding: 40px;
+  padding: clamp(20px, 5vw, 40px);
   margin: 20px 0;
   border: 1px solid lightgray;
   background-color: white;
@@ -40,11 +38,18 @@ const Container = styled.div`
     position: absolute;
     top: 40px;
     right: 20px;
+
+    @media (max-width: 600px) {
+      top: 5px;
+    }
   }
 
-  span {
-    font-size: 20px;
-    font-weight: 500;
-    text-align: right;
+  p {
+    font-size: min(calc(0.5em + 1vw), 16px);
   }
-`
+
+  .order-total {
+    font-size: min(calc(0.5em + 1vw), 20px);
+    font-weight: 500;
+  }
+`;
