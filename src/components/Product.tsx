@@ -57,23 +57,33 @@ function Product(props: Props) {
 export default Product;
 
 const Container = styled.div`
-  height: 450px;
-  width: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 600px;
+  width: 40vw;
   background-color: white;
   padding: 20px;
   text-align: left;
   z-index: 1;
+
+  h3 {
+    font-size: min(calc(0.5em + 1vw), 20px);
+  }
 
   .productImage {
     text-align: center;
   }
 
   img {
-    height: 200px;
+    max-height: 200px;
+    width: 30vw;
+    max-width: 300px;
+    object-fit: contain;
   }
 
   p {
-    font-size: 20px;
+    font-size: min(calc(0.5em + 1vw), 20px);
   }
 
   small {
@@ -82,7 +92,6 @@ const Container = styled.div`
 `;
 
 const ProductInfo = styled.div`
-  height: 125px;
 `
 
 const ProductRating = styled.div`
@@ -98,8 +107,8 @@ export const Button = styled.div`
   text-align: center;
 
   button {
-    height: 30px;
-    width: 200px;
+    height: clamp(20px, 5vw, 30px);
+    width: clamp(100px, 30vw, 200px);
     border-radius: 20px;
     border: none;
     background-color: rgb(255, 216, 20);
