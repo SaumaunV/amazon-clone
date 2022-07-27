@@ -41,8 +41,6 @@ function Orders() {
     if(user) {
       return () => unsubscribe();
     }
-    
-    //return onsnapshot unsubscribe function
   }, []);
 
   return (
@@ -58,7 +56,7 @@ function Orders() {
 export default Orders;
  
 const Container = styled.div`
-  padding: 20px 80px;
+  padding: 1% 4%;
   background-color: #eaeded;
 
   h1 {
