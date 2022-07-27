@@ -30,15 +30,20 @@ function Cart() {
 export default Cart;
 
 const Container = styled.div`
-    display: flex;
-    min-height: 90vh;
-    background-color: #eaeded;
-    padding: 14px 18px;
+  display: flex;
+  min-height: 90vh;
+  background-color: #eaeded;
+  padding: 14px 18px;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 const ShoppingCart = styled.div`
+    flex: 1;
     height: 100%;
-    width: 1500px;
+    max-width: 1500px;
     background-color: white;
     margin-bottom: 20px;
 
