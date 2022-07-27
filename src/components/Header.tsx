@@ -111,7 +111,7 @@ const Input = styled.div`
     text-indent: 8px;
     font-size: 15px;
     padding-bottom: 3px;
-    @media (max-width: 500px) {
+    @media (max-width: 550px) {
       width: 20vw;
     }
     @media (max-width: 400px) {
