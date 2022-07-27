@@ -15,7 +15,7 @@ function Subtotal() {
           Subtotal (
           {cart.length > 1 ? `${cart.length} items` : `${cart.length} item`}):
         </span>
-        <span className="price"> ${getCartTotal(cart)}</span>
+        <span className="price"> ${getCartTotal(cart).toFixed(2)}</span>
       </div>
       <div className="checkboxGift">
         <input type="checkbox" id="gift" />
@@ -34,38 +34,49 @@ function Subtotal() {
 export default Subtotal;
 
 const Container = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-    height: 250px;
-    min-width: 300px;
-    background-color: white;
-    margin-left: 25px;
-    padding: 20px;
-    text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 250px;
+  //min-width: 300px;
+  min-width: clamp(200px, 25vw, 300px);
+  background-color: white;
+  margin-left: 25px;
+  padding: 20px;
+  text-align: left;
 
-    span {
-        font-size: 20px;
-    }
+  span {
+    font-size: 20px;
+  }
 
-    .price {
-        font-weight: 700;
-    }
+  .price {
+    font-weight: 700;
+  }
 
-    label {
-        padding-left: 5px;
-    }
+  label {
+    padding-left: 5px;
+  }
 
-    .checkboxGift {
-        padding-top: 5px;
-    }
+  .checkboxGift {
+    padding-top: 5px;
+  }
+
+  @media (max-width: 600px) {
+    margin: 0px;
+    text-align: center;
+  }
 `;
 
 const CheckoutButton = styled(Button)`
-    text-align: left;
-    button {
-        margin-top: -10px;
-        width: 260px;
-        border-radius: 8px;
-    }
+  text-align: left;
+  button {
+    margin-top: -10px;
+    max-width: 260px;
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 600px) {
+    text-align: center;
+  }
 `;
