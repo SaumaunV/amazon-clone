@@ -3,7 +3,10 @@ import React, { createContext, Dispatch, useContext, useReducer } from "react";
 import { Action, CartItem, StateType } from "./reducer";
 
 
-type ContextType = [{ cart: CartItem[]; user: User | null }, Dispatch<Action>]
+type ContextType = [
+  { cart: [CartItem, number][]; user: User | null },
+  Dispatch<Action>
+];
 
 export const StateContext = createContext<ContextType>({} as ContextType);
 
@@ -12,7 +15,7 @@ interface Props {
     a: StateType,
     b: Action
   ) => {
-    cart: CartItem[];
+    cart: [CartItem, number][];
     user: User | null;
   };
   initialState: StateType;
