@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useStateValue } from "../context/StateProvider";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
+import { getQuantityTotal } from "../context/reducer";
 
 function Header() {
   const [{cart, user}, dispatch] = useStateValue();
@@ -54,7 +55,7 @@ function Header() {
           <div className="main cart">
             <ShoppingCartIcon className="cart-icon" />
             <div className="cart-text">
-              <span className="cart-number">{cart.length}</span>
+              <span className="cart-number">{getQuantityTotal(cart)}</span>
               <span className="second">Cart</span>
             </div>
           </div>
