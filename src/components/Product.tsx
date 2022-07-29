@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useStateValue } from "../context/StateProvider";
 
 interface Props {
+  id: string;
   title: string;
   price: number;
   image: string;
@@ -10,17 +11,28 @@ interface Props {
 }
 
 function Product(props: Props) {
-  const [ _ , dispatch] = useStateValue();
+  const [ cart , dispatch] = useStateValue();
+  const i = cart.cart.findIndex(
+    (cartItem) => cartItem[0].id === props.id
+  );
+  let quantity = 0;
+  if(i>=0){
+    quantity = cart.cart[i][1];
+  }
+  
 
   const addToCart = () => {
     dispatch({
       type: "ADD_TO_CART",
-      item: {
+      item: [{
+        id: props.id,
         title: props.title,
         price: props.price,
         image: props.image,
         rating: props.rating,
-      },
+      }, 1 + quantity
+    ],
+    index: i
     });
   };
 

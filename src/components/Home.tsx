@@ -13,36 +13,42 @@ function Home() {
 
       <ProductWrapper>
         <Product
+          id="1"
           title="All-new Echo Dot (4th Gen, 2020 release) | Smart speaker with Alexa | Charcoal"
           price={29.99}
           image="https://images-na.ssl-images-amazon.com/images/I/714Rq4k05UL._AC_SL1000_.jpg"
           rating={5}
         />
         <Product
+          id="2"
           title="LG 27GL83A-B 27 Inch Ultragear QHD IPS 1ms NVIDIA G-SYNC Compatible Gaming Monitor, Black"
           price={379.99}
           image="https://images-na.ssl-images-amazon.com/images/I/91lS5yEDH-L._AC_SL1500_.jpg"
           rating={5}
         />
         <Product
+          id="3"
           title="Bose QuietComfort 35 II Wireless Bluetooth Headphones, Noise-Cancelling, with Alexa Voice Control -Silver"
           price={269.0}
           image="https://images-na.ssl-images-amazon.com/images/I/71%2BiQZU-dVL._AC_SL1500_.jpg"
           rating={5}
         />
         <Product
+          id="4"
           title="TP-Link AC1750 Smart WiFi Router (Archer A7) - Dual Band Gigabit Wireless Internet Router for Home, Works with Alexa, VPN Server, Parental Control and QoS"
           price={56.99}
           image="https://images-na.ssl-images-amazon.com/images/I/51R2a9p-vNL._AC_SL1000_.jpg"
           rating={5}
         />
         <Product
+          id="5"
           title="eufy by Anker, BoostIQ RoboVac 11S (Slim), Robot Vacuum Cleaner, Super-Thin, 1300Pa Strong Suction, Quiet, Self-Charging Robotic Vacuum Cleaner, Cleans Hard Floors to Medium-Pile Carpets"
           price={149.99}
           image="https://m.media-amazon.com/images/I/71TmTj7HjNL._AC_SY450_.jpg"
           rating={5}
         />
         <Product
+          id="6"
           title="Sabrent 4-Port USB 2.0 Hub with Individual LED lit Power Switches (HB-UMLS)"
           price={7.99}
           image="https://images-na.ssl-images-amazon.com/images/I/71igbmDJwDL._AC_SL1500_.jpg"
