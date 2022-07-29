@@ -18,11 +18,18 @@ function Cart() {
           price={29.99}
           image="https://images-na.ssl-images-amazon.com/images/I/714Rq4k05UL._AC_SL1000_.jpg"
         /> */}
-        {cart.map((item: CartItem) => (
-          <CartProduct key={item.title} title={item.title} image={item.image} price={item.price} />
+        {cart.map((item: [CartItem, number]) => (
+          <CartProduct
+            key={item[0].id}
+            id={item[0].id}
+            title={item[0].title}
+            image={item[0].image}
+            price={item[0].price * item[1]}
+            quantity={item[1]}
+          />
         ))}
       </ShoppingCart>
-      {(cart.length > 0) && <Subtotal />}
+      {cart.length > 0 && <Subtotal />}
     </Container>
   );
 }

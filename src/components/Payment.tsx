@@ -89,7 +89,7 @@ function Payment() {
         </h1>
         <PaymentSection>
           <h3>Delivery address</h3>
-          <div>
+          <div className="user-info">
             <p>{user?.email}</p>
             <p>123 React Lane</p>
             <p>Chicago, IL</p>
@@ -98,12 +98,14 @@ function Payment() {
         <PaymentSection>
           <h3>Review items and delivery</h3>
           <div>
-            {cart.map((item: CartItem) => (
+            {cart.map((item: [CartItem, number]) => (
               <CartProduct
-                key={item.title}
-                title={item.title}
-                image={item.image}
-                price={item.price}
+                key={item[0].id}
+                id={item[0].id}
+                title={item[0].title}
+                image={item[0].image}
+                price={item[0].price}
+                quantity={item[1]}
                 hideBorder
               />
             ))}
@@ -135,6 +137,7 @@ export default Payment;
 const Container = styled.div`
   text-align: left;
   background-color: white;
+  //max-width: 100vw;
 
   h1 {
     text-align: center;
@@ -155,24 +158,32 @@ const PaymentWrapper = styled.div``;
 const PaymentSection = styled.div`
   display: flex;
   padding: 20px;
-  margin: 0 20px;
+  //margin: 0 20px;
   border-bottom: 1px solid lightgray;
 
   h3 {
     flex: 0.2;
+    font-size: min(calc(0.5em + 1vw), 20px);
   }
 
   div {
+    //margin-left: 10px;
     flex: 0.8;
   }
 
+  .user-info {
+    font-size: min(calc(0.5em + 1vw), 16px);
+  }
+
   span {
-    font-size: 20px;
+    //font-size: 20px;
+    font-size: min(calc(0.5em + 1vw), 20px);
     font-weight: 500;
   }
 
   .pay-button {
-    width: 300px;
+    min-width: 150px;
+    max-width: 300px;
     margin: 10px 0;
     height: 30px;
     background: linear-gradient(to bottom, #f7dfa5, #f0c14b);

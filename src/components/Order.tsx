@@ -17,10 +17,20 @@ function Order({ order }: Props) {
       <p className="id">
         <small>{order.id}</small>
       </p>
-      {order.data.cart?.map((item: CartItem) => (
-        <CartProduct title={item.title} image={item.image} price={item.price} hideButton hideBorder/>
+      {order.data.cart?.map((item: [CartItem, number]) => (
+        <CartProduct
+          id={item[0].id}
+          title={item[0].title}
+          image={item[0].image}
+          price={item[0].price}
+          quantity={item[1]}
+          hideButton
+          hideBorder
+        />
       ))}
-      <span className="order-total">Order Total: ${order.data.amount/100}</span>
+      <span className="order-total">
+        Order Total: ${order.data.amount / 100}
+      </span>
     </Container>
   );
 }
