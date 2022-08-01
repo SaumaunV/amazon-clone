@@ -17,7 +17,8 @@ export type Action =
   | { type: "ADD_TO_CART"; item: [CartItem, number], index: number}
   | { type: "REMOVE_FROM_CART"; id: string }
   | { type: "SET_USER"; user: User | null}
-  | { type: "EMPTY_CART"};
+  | { type: "EMPTY_CART"}
+  | { type: "UPDATE_QUANTITY"; quantity: number, id: string}
 
 export const initialState: StateType = {
   cart: [],
@@ -57,6 +58,12 @@ const reducer = (state: StateType, action: Action) => {
           ...state,
           cart: newCart
       }
+    case "UPDATE_QUANTITY":
+      const i = state.cart.findIndex(
+        (cartItem) => cartItem[0].id === action.id
+      );
+      state.cart[i][1] = action.quantity;
+      return {...state}
     case "EMPTY_CART":
       return {
         ...state,
