@@ -4,7 +4,7 @@ import { collection, doc, setDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { CartItem, getCartTotal } from "../context/reducer";
+import { CartItem, getCartTotal, getQuantityTotal } from "../context/reducer";
 import { useStateValue } from "../context/StateProvider";
 import { db } from "../firebase";
 import CartProduct from "./CartProduct";
@@ -25,6 +25,8 @@ function Payment() {
 
   const navigate = useNavigate();
 
+  const quantity = getQuantityTotal(cart);
+
   useEffect(() => {
     async function getClientSecret() {
       const response = await fetch(
@@ -41,8 +43,6 @@ function Payment() {
       getClientSecret();
     }
   }, [cart]);
-
-  //console.log('The secret is >>>>', clientSecret)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -81,9 +81,9 @@ function Payment() {
         <h1>
           Checkout (
           <Link to="/checkout">
-            {cart?.length !== 1
-              ? `${cart.length} items`
-              : `${cart.length} item`}
+            {quantity !== 1
+              ? `${quantity} items`
+              : `${quantity} item`}
           </Link>
           ){" "}
         </h1>
@@ -104,7 +104,7 @@ function Payment() {
                 id={item[0].id}
                 title={item[0].title}
                 image={item[0].image}
-                price={item[0].price}
+                price={item[0].price * item[1]}
                 quantity={item[1]}
                 hideBorder
               />
@@ -117,7 +117,7 @@ function Payment() {
             <form onSubmit={handleSubmit}>
               <CardElement onChange={handleChange} />
               <div>
-                <span>Order total: ${getCartTotal(cart)}</span>
+                <span>Order total: ${getCartTotal(cart).toFixed(2)}</span>
               </div>
               
               <button className="pay-button" disabled={disabled || succeeded || processing}>

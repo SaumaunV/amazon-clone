@@ -1,19 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { getCartTotal } from "../context/reducer";
+import { getCartTotal, getQuantityTotal } from "../context/reducer";
 import { useStateValue } from "../context/StateProvider";
 import { Button } from "./Product";
 
 function Subtotal() {
   const [{ cart }, _ ] = useStateValue();
+  const quantity = getQuantityTotal(cart);
 
   return (
     <Container>
       <div>
         <span>
           Subtotal (
-          {cart.length > 1 ? `${cart.length} items` : `${cart.length} item`}):
+          {quantity > 1 ? `${quantity} items` : `${quantity} item`}):
         </span>
         <span className="price"> ${getCartTotal(cart).toFixed(2)}</span>
       </div>
