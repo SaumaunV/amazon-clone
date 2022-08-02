@@ -26,6 +26,8 @@ function Order({ order }: Props) {
           quantity={item[1]}
           hideButton
           hideBorder
+          hideStock
+          disableQuantity
         />
       ))}
       <span className="order-total">
