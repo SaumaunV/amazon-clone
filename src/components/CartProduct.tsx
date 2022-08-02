@@ -1,25 +1,36 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useStateValue } from '../context/StateProvider';
-import {Button} from './Product'
+import {Button} from './Product';
+import InputLabel from '@mui/material/InputLabel';
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 
 interface Props {
+  id: string,
   title: string,
   price: number,
   image: string,
+  quantity: number,
   hideButton?: boolean
   hideBorder?: boolean
+  hideStock?: boolean
+  disableQuantity?: boolean
 }
 
 interface ContainerProps {
   hideBorder?: boolean
 }
 
-function CartProduct({title, price, image, hideButton, hideBorder}: Props) {
-  const [_, dispatch] = useStateValue();
+
+function CartProduct({id, title, price, image, quantity, hideButton, hideBorder, hideStock, disableQuantity}: Props) {
+  const [ { cart } , dispatch] = useStateValue();
 
   function removeItem() {
-    dispatch({type: "REMOVE_FROM_CART", title})
+    dispatch({type: "REMOVE_FROM_CART", id})
+  }
+
+  function handleQuantityChange(e: SelectChangeEvent<number>){
+    dispatch({type: "UPDATE_QUANTITY", quantity: +e.target.value, id });
   }
 
   return (
@@ -30,15 +41,42 @@ function CartProduct({title, price, image, hideButton, hideBorder}: Props) {
           <span className="title">{title}</span>
           <p>
             <span className="dollar-sign">$</span>
-            <span className="price">{price}</span>
+            <span className="price">{price.toFixed(2)}</span>
           </p>
-          <span className="stock">In Stock</span>
+          {!hideStock && <span className="stock">In Stock</span>}
         </InfoText>
-        {!hideButton && (
-          <RemoveButton>
-            <button onClick={removeItem}>Remove from Cart</button>
-          </RemoveButton>
-        )}
+        <ButtonWrapper>
+          {disableQuantity ? (
+            <span>Quantity: {quantity}</span>
+          ) : (
+            <>
+              <InputLabel id="quantity-select" />
+              <Select
+                labelId="quantity-select"
+                id="quantity"
+                defaultValue={quantity}
+                onChange={handleQuantityChange}
+                style={{ height: 40, maxWidth: 70, marginRight: 20 }}
+              >
+                <MenuItem value={1}>1</MenuItem>
+                <MenuItem value={2}>2</MenuItem>
+                <MenuItem value={3}>3</MenuItem>
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={5}>5</MenuItem>
+                <MenuItem value={6}>6</MenuItem>
+                <MenuItem value={7}>7</MenuItem>
+                <MenuItem value={8}>8</MenuItem>
+                <MenuItem value={9}>9</MenuItem>
+                <MenuItem value={10}>10</MenuItem>
+              </Select>
+            </>
+          )}
+          {!hideButton && (
+            <RemoveButton>
+              <button onClick={removeItem}>Remove from Cart</button>
+            </RemoveButton>
+          )}
+        </ButtonWrapper>
       </Info>
     </Container>
   );
@@ -48,15 +86,15 @@ export default CartProduct
 
 const Container = styled.div<ContainerProps>`
   display: flex;
-  width: 1460px;
+  width: auto;
   height: 240px;
   padding: 12px;
   margin: 20px;
   border: ${(props) => props.hideBorder ? "none" : "1px solid rgb(231, 231, 231)"} ;
 
   img {
-    min-width: 250px;
     max-width: 250px;
+    width: 28vw;
     object-fit: contain;
   }
 `;
@@ -68,7 +106,7 @@ const Info = styled.div`
   margin-left: 20px;
 
   .price {
-    font-size: 28px;
+    font-size: min(calc(1em + 1vw), 28px);
     font-weight: 700;
   }
 
@@ -76,24 +114,39 @@ const Info = styled.div`
     vertical-align: 40%;
     font-weight: 700;
   }
-
-`
+`;
 
 const InfoText = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
   flex: 1;
 
   .title {
-    font-size: 16px;
+    display: inline-block;
+    font-size: min(calc(0.4em + 1vw), 16px);
     font-weight: 500;
+    max-height: 100px;
+    overflow: clip;
   }
 
   .stock {
     color: #007600;
-    font-size: 14px;
+    font-size: min(calc(0.5em + 1vw), 14px);
+    font-weight: 500;
   }
 `;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
 
 const RemoveButton = styled(Button)`
   text-align: left;
   margin-bottom: 20px;
-`
+
+  button {
+    font-size: min(calc(0.4em + 1vw), 16px);
+  }
+`;
