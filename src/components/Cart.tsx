@@ -11,13 +11,8 @@ function Cart() {
   return (
     <Container>
       <ShoppingCart>
-        <h1>Shopping Cart</h1>
+        <h1>{cart.length === 0 ? "Your Shopping Cart is empty": "Shopping Cart"}</h1>
         <hr />
-        {/* <CartProduct
-          title="All-new Echo Dot (4th Gen, 2020 release) | Smart speaker with Alexa | Charcoal"
-          price={29.99}
-          image="https://images-na.ssl-images-amazon.com/images/I/714Rq4k05UL._AC_SL1000_.jpg"
-        /> */}
         {cart.map((item: [CartItem, number]) => (
           <CartProduct
             key={item[0].id}
@@ -38,7 +33,7 @@ export default Cart;
 
 const Container = styled.div`
   display: flex;
-  min-height: 90vh;
+  min-height: 94vh;
   background-color: #eaeded;
   padding: 14px 18px;
 
