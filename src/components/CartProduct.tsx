@@ -52,11 +52,11 @@ function CartProduct({id, title, price, image, quantity, hideButton, hideBorder,
             <>
               <InputLabel id="quantity-select" />
               <Select
+                className='quantity'
                 labelId="quantity-select"
                 id="quantity"
                 defaultValue={quantity}
                 onChange={handleQuantityChange}
-                style={{ height: 40, maxWidth: 70, marginRight: 20 }}
               >
                 <MenuItem value={1}>1</MenuItem>
                 <MenuItem value={2}>2</MenuItem>
@@ -117,9 +117,9 @@ const Info = styled.div`
 `;
 
 const InfoText = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   flex: 1;
 
   .title {
@@ -140,7 +140,22 @@ justify-content: center;
 const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
-`
+
+  .quantity {
+    height: 40px;
+    max-width: 70px;
+    margin-right: 20px;
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .quantity {
+      margin-right: 10px;
+    }
+  }
+`;
 
 const RemoveButton = styled(Button)`
   text-align: left;
@@ -148,5 +163,9 @@ const RemoveButton = styled(Button)`
 
   button {
     font-size: min(calc(0.4em + 1vw), 16px);
+  }
+
+  @media (max-width: 600px) {
+    margin-top: 10px;
   }
 `;
