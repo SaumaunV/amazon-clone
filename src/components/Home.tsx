@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import Popup from './Popup';
 import Product from './Product';
 
+export type Popup = {
+  image: string
+  title: string
+  price: number
+}
+
 function Home() {
+  const [popups, setPopups] = useState<Popup[]>([]);
+
   return (
     <Container>
       <img
@@ -18,6 +27,7 @@ function Home() {
           price={29.99}
           image="https://images-na.ssl-images-amazon.com/images/I/714Rq4k05UL._AC_SL1000_.jpg"
           rating={5}
+          setPopups={setPopups}
         />
         <Product
           id="2"
@@ -25,6 +35,7 @@ function Home() {
           price={379.99}
           image="https://images-na.ssl-images-amazon.com/images/I/91lS5yEDH-L._AC_SL1500_.jpg"
           rating={5}
+          setPopups={setPopups}
         />
         <Product
           id="3"
@@ -32,6 +43,7 @@ function Home() {
           price={269.0}
           image="https://images-na.ssl-images-amazon.com/images/I/71%2BiQZU-dVL._AC_SL1500_.jpg"
           rating={5}
+          setPopups={setPopups}
         />
         <Product
           id="4"
@@ -39,6 +51,7 @@ function Home() {
           price={56.99}
           image="https://images-na.ssl-images-amazon.com/images/I/51R2a9p-vNL._AC_SL1000_.jpg"
           rating={5}
+          setPopups={setPopups}
         />
         <Product
           id="5"
@@ -46,6 +59,7 @@ function Home() {
           price={149.99}
           image="https://m.media-amazon.com/images/I/71TmTj7HjNL._AC_SY450_.jpg"
           rating={5}
+          setPopups={setPopups}
         />
         <Product
           id="6"
@@ -53,8 +67,14 @@ function Home() {
           price={7.99}
           image="https://images-na.ssl-images-amazon.com/images/I/71igbmDJwDL._AC_SL1500_.jpg"
           rating={5}
+          setPopups={setPopups}
         />
       </ProductWrapper>
+      <PopupContainer>
+        {popups.map((popup) => (
+          <Popup title={popup.title} image={popup.image} price={popup.price} />
+        ))}
+      </PopupContainer>
     </Container>
   );
 }
@@ -83,3 +103,16 @@ const ProductWrapper = styled.div`
   row-gap: 30px;
   padding-bottom: 40px;
 `
+
+const PopupContainer = styled.div`
+  position: fixed;
+  top: 70px;
+  right: 5px;
+  width: 25vw;
+  z-index: 10;
+  overflow: hidden;
+
+  @media (max-width: 600px) {
+    width: 40vw;
+  }
+`;
