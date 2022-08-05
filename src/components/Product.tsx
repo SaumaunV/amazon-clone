@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { useStateValue } from "../context/StateProvider";
+import { Popup } from "./Home";
 
 interface Props {
   id: string;
@@ -8,12 +9,13 @@ interface Props {
   price: number;
   image: string;
   rating: number;
+  setPopups: Dispatch<SetStateAction<Popup[]>>;
 }
 
-function Product(props: Props) {
+function Product({ id, title, price, image, rating, setPopups }: Props) {
   const [ cart , dispatch] = useStateValue();
   const i = cart.cart.findIndex(
-    (cartItem) => cartItem[0].id === props.id
+    (cartItem) => cartItem[0].id === id
   );
   let quantity = 0;
   if(i>=0){
@@ -25,24 +27,26 @@ function Product(props: Props) {
     dispatch({
       type: "ADD_TO_CART",
       item: [{
-        id: props.id,
-        title: props.title,
-        price: props.price,
-        image: props.image,
-        rating: props.rating,
+        id: id,
+        title: title,
+        price: price,
+        image: image,
+        rating: rating,
       }, 1 + quantity
     ],
     index: i
     });
+    setPopups(prevState => [...prevState, {title, image, price}]);
+    setTimeout(() => setPopups(prevState => prevState.slice(1)), 3000)
   };
 
   return (
     <Container>
       <ProductInfo>
-        <h3>{props.title}</h3>
+        <h3>{title}</h3>
 
         <ProductRating>
-          {Array(props.rating)
+          {Array(rating)
             .fill(null)
             .map((_, index) => (
               <p key={index}>★</p>
@@ -51,12 +55,12 @@ function Product(props: Props) {
 
         <p>
           <small>$</small>
-          <span>{props.price}</span>
+          <span>{price}</span>
         </p>
       </ProductInfo>
 
       <div className="productImage">
-        <img src={props.image} alt={props.title} />
+        <img src={image} alt={title} />
       </div>
 
       <Button>
