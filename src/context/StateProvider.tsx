@@ -24,7 +24,12 @@ interface Props {
 
 export default function StateProvider({ reducer, initialState, children }: Props) {
   return (
-    <StateContext.Provider value={useReducer(reducer, initialState)}>
+    <StateContext.Provider
+      value={useReducer(reducer, initialState, () => {
+        const localData = localStorage.getItem("cart");
+        return localData ? {cart: JSON.parse(localData), user: null} : initialState;
+      })}
+    >
       {children}
     </StateContext.Provider>
   );
