@@ -18,7 +18,7 @@ function Header() {
   }
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem(`cart-${user?.email}`, JSON.stringify(cart));
   }, [cart]);
 
   return (
