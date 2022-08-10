@@ -14,11 +14,11 @@ export type StateType = {
 };
 
 export type Action =
-  | { type: "ADD_TO_CART"; item: [CartItem, number], index: number}
+  | { type: "ADD_TO_CART"; item: [CartItem, number]; index: number }
   | { type: "REMOVE_FROM_CART"; id: string }
-  | { type: "SET_USER"; user: User | null}
-  | { type: "EMPTY_CART"}
-  | { type: "UPDATE_QUANTITY"; quantity: number, id: string}
+  | { type: "SET_USER"; user: User | null }
+  | { type: "EMPTY_CART" }
+  | { type: "UPDATE_QUANTITY"; quantity: number; id: string };
 
 export const initialState: StateType = {
   cart: [],
@@ -70,9 +70,11 @@ const reducer = (state: StateType, action: Action) => {
         cart: []
       }
     case "SET_USER":
+      const localCart = localStorage.getItem(`cart-${action.user?.email}`)
       return {
         ...state,
-        user: action.user
+        user: action.user,
+        cart: localCart ? JSON.parse(localCart) : []
       }
     default:
         return state;

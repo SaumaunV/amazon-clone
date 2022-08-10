@@ -26,7 +26,7 @@ export default function StateProvider({ reducer, initialState, children }: Props
   return (
     <StateContext.Provider
       value={useReducer(reducer, initialState, () => {
-        const localData = localStorage.getItem("cart");
+        const localData = localStorage.getItem("cart-undefined");
         return localData ? {cart: JSON.parse(localData), user: null} : initialState;
       })}
     >
