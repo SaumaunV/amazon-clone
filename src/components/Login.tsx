@@ -61,7 +61,7 @@ function Login() {
             />
           </div>
           <button onClick={handleSignin}>Sign In</button>
-          <button onClick={createAccount}>Create Your Amazon Account</button>
+          <button className="create-account" onClick={createAccount}>Create Your Amazon Account</button>
         </form>
       </FormWrapper>
     </Container>
@@ -96,6 +96,21 @@ const FormWrapper = styled.div`
     &:hover {
       background: linear-gradient(to bottom, #f3d796, #f0bf43);
       border-color: #a88734 #9c7e31 #846a29;
+    }
+  }
+
+  .create-account {
+    margin: 10px 0;
+    height: 29px;
+    background: linear-gradient(to bottom, #eff1f5, #e7e9ec);
+    border-width: 1px;
+    border-radius: 3px;
+    border-color: #adb1b8 #a2a6ac #8d9096;
+    cursor: pointer;
+
+    &:hover {
+      background: linear-gradient(to bottom, #e2e3e7, #e3e5e9);
+      border-color: #adb1b8 #a2a6ac #8d9096;
     }
   }
 
