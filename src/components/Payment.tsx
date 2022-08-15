@@ -28,6 +28,7 @@ function Payment() {
   const quantity = getQuantityTotal(cart);
 
   useEffect(() => {
+    if(cart.length === 0) setDisabled(true);
     async function getClientSecret() {
       const response = await fetch(
         `${baseURL}/payments/create?total=${Math.round(getCartTotal(cart) * 100)}`,
