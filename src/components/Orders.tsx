@@ -45,7 +45,7 @@ function Orders() {
 
   return (
     <Container>
-      <h1>Your Orders</h1>
+      {user ? <h1>Your Orders</h1> : <h1>You are not signed in. Sign in or create amazon clone account to view order history</h1>}
       {orders.map((order) => (
         <Order key={order.id} order={order} />
       ))}
