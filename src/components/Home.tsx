@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Popup from './Popup';
 import Product from './Product';
+import { v4 as uuidv4} from 'uuid';
 
 export type Popup = {
   image: string
@@ -11,6 +12,10 @@ export type Popup = {
 
 function Home() {
   const [popups, setPopups] = useState<Popup[]>([]);
+
+  useEffect(() => {
+    return () => setPopups([]);
+  }, [])
 
   return (
     <Container>
@@ -72,7 +77,7 @@ function Home() {
       </ProductWrapper>
       <PopupContainer>
         {popups.map((popup) => (
-          <Popup title={popup.title} image={popup.image} price={popup.price} />
+          <Popup key={uuidv4()} title={popup.title} image={popup.image} price={popup.price} />
         ))}
       </PopupContainer>
     </Container>
