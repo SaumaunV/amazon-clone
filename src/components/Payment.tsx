@@ -10,12 +10,12 @@ import { db } from "../firebase";
 import CartProduct from "./CartProduct";
 
 const baseURL = "https://us-central1-clone-e06ca.cloudfunctions.net/api";
-//const baseUrl = "http://localhost:5001/clone-e06ca/us-central1/api";
+//const baseURL = "http://localhost:5001/clone-e06ca/us-central1/api";
 
 function Payment() {
   const [{ cart, user }, dispatch] = useStateValue();
   const [error, setError] = useState<string | null>(null);
-  const [disabled, setDisabled] = useState(true);
+  const [disabled, setDisabled] = useState(false);
   const [succeeded, setSucceeded] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
@@ -49,25 +49,27 @@ function Payment() {
     e.preventDefault();
     setProcessing(true);
 
-    const payload = await stripe?.confirmCardPayment(clientSecret, {
+    await stripe?.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements!.getElement(CardElement)!,
       },
     }).then(({paymentIntent}) => {
 
         setDoc(doc(db, "users", `${user?.uid}`, 'orders', `${paymentIntent!.id}`), {
-          cart: cart,
-          amount: paymentIntent!.amount,
-          created: paymentIntent!.created
-        })
+            cart: cart.map((item) => { return {...item[0], quantity: item[1]}}),
+            amount: paymentIntent!.amount,
+            created: paymentIntent!.created
+          }
+        );
 
         setSucceeded(true);
         setError(null);
         setProcessing(false);
 
-        dispatch({type: "EMPTY_CART"})
+        dispatch({ type: "EMPTY_CART" });
 
-        navigate("/orders", {replace: true});
+        navigate("/orders", { replace: true });
+      
     })
   }
 
@@ -138,7 +140,6 @@ export default Payment;
 const Container = styled.div`
   text-align: left;
   background-color: white;
-  //max-width: 100vw;
 
   h1 {
     text-align: center;
@@ -159,7 +160,6 @@ const PaymentWrapper = styled.div``;
 const PaymentSection = styled.div`
   display: flex;
   padding: 20px;
-  //margin: 0 20px;
   border-bottom: 1px solid lightgray;
 
   h3 {
@@ -168,7 +168,6 @@ const PaymentSection = styled.div`
   }
 
   div {
-    //margin-left: 10px;
     flex: 0.8;
   }
 
@@ -177,7 +176,6 @@ const PaymentSection = styled.div`
   }
 
   span {
-    //font-size: 20px;
     font-size: min(calc(0.5em + 1vw), 20px);
     font-weight: 500;
   }
@@ -198,6 +196,12 @@ const PaymentSection = styled.div`
     &:hover {
       background: linear-gradient(to bottom, #f3d796, #f0bf43);
       border-color: #a88734 #9c7e31 #846a29;
+    }
+
+    &:disabled {
+      opacity: 50%;
+      cursor: not-allowed;
+      background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
     }
   }
 `;
