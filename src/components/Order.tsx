@@ -9,6 +9,14 @@ interface Props {
   order: DocumentType;
 }
 
+type OrderType = {
+  id: string,
+  title: string,
+  image: string,
+  price: number,
+  quantity: number,
+}
+
 function Order({ order }: Props) {
   return (
     <Container>
@@ -17,13 +25,14 @@ function Order({ order }: Props) {
       <p className="id">
         <small>{order.id}</small>
       </p>
-      {order.data.cart?.map((item: [CartItem, number]) => (
+      {order.data.cart?.map((item: OrderType) => (
         <CartProduct
-          id={item[0].id}
-          title={item[0].title}
-          image={item[0].image}
-          price={item[0].price}
-          quantity={item[1]}
+          key={item.id}
+          id={item.id}
+          title={item.title}
+          image={item.image}
+          price={item.price}
+          quantity={item.quantity}
           hideButton
           hideBorder
           hideStock
